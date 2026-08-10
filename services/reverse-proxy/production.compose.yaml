@@ -1,0 +1,31 @@
+name: "reverse-proxy-production"
+
+services:
+  server:
+    build:
+      context: "./images/"
+      dockerfile: "./server.dockerfile"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "nginx_configuration:/etc/nginx/"
+    restart: "unless-stopped"
+
+  manager:
+    build:
+      context: "./images/"
+      dockerfile: "./manager.dockerfile"
+    volumes:
+      - "lego_data:/var/lib/lego/"
+    environment:
+      ACME_PROVIDER_NAME: "${REPOSITORY__ACME_PROVIDER_NAME}"
+      ACME_DOMAIN_NAME: "${REPOSITORY__ACME_DOMAIN_NAME}"
+      ACME_DOMAIN_EMAIL: "${REPOSITORY__ACME_DOMAIN_EMAIL}"
+      YANDEX_CLOUD_FOLDER_ID: "${REPOSITORY__YANDEX_CLOUD_FOLDER_ID}"
+      YANDEX_CLOUD_IAM_TOKEN: "${REPOSITORY__YANDEX_CLOUD_IAM_TOKEN}"
+    restart: "unless-stopped"
+
+volumes:
+  nginx_configuration:
+  lego_data:
