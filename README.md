@@ -14,3 +14,7 @@ being deployed together.
 Environment variables that form the repository's external configuration
 contract use the `REPOSITORY__` prefix and are passed to containers through
 their Compose files.
+
+## Credits
+
+Created by Egor Chumichev.
