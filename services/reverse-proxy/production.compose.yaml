@@ -10,6 +10,7 @@ services:
       - "443:443"
     volumes:
       - "nginx_configuration:/etc/nginx/"
+      - "lego_data:/var/lib/lego/"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: "unless-stopped"
