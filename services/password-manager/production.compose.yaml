@@ -1,0 +1,37 @@
+name: "password-manager-production"
+
+services:
+  server:
+    build:
+      context: "./images/"
+      dockerfile: "./server.dockerfile"
+    ports:
+      - "8089:80"
+    volumes:
+      - "passbolt_configuration:/etc/passbolt/"
+    environment:
+      - "APP_FULL_BASE_URL=${REPOSITORY__APPLICATION_BASE_URL}"
+      - "PASSBOLT_SSL_FORCE=false"
+      - "DATASOURCES_DEFAULT_DRIVER=Cake\Database\Driver\Postgres"
+      - "DATASOURCES_DEFAULT_ENCODING=utf8"
+      - "DATASOURCES_DEFAULT_URL=postgres://${REPOSITORY__LOCAL_DATABASE_USER_NAME}:${REPOSITORY__LOCAL_DATABASE_USER_PASSWORD}@database:5432/${REPOSITORY__LOCAL_DATABASE_NAME}?schema=passbolt"
+    depends_on:
+      - "database"
+    restart: "unless-stopped"
+
+  database:
+    build:
+      context: "./../../images/postgresql/"
+      dockerfile: "./server.dockerfile"
+    volumes:
+      - "postgresql_data:/var/lib/postgresql/"
+    environment:
+      ROOT_PASSWORD: "${REPOSITORY__ROOT_DATABASE_USER_PASSWORD}"
+      LOCAL_DB: "${REPOSITORY__LOCAL_DATABASE_NAME}"
+      LOCAL_USER: "${REPOSITORY__LOCAL_DATABASE_USER_NAME}"
+      LOCAL_PASSWORD: "${REPOSITORY__LOCAL_DATABASE_USER_PASSWORD}"
+    restart: "unless-stopped"
+
+volumes:
+  passbolt_configuration:
+  postgresql_data:
