@@ -12,7 +12,7 @@ services:
     environment:
       - "APP_FULL_BASE_URL=${REPOSITORY__APPLICATION_BASE_URL}"
       - "PASSBOLT_SSL_FORCE=false"
-      - "DATASOURCES_DEFAULT_DRIVER=Cake\Database\Driver\Postgres"
+      - "DATASOURCES_DEFAULT_DRIVER=Cake\\Database\\Driver\\Postgres"
       - "DATASOURCES_DEFAULT_ENCODING=utf8"
       - "DATASOURCES_DEFAULT_URL=postgres://${REPOSITORY__LOCAL_DATABASE_USER_NAME}:${REPOSITORY__LOCAL_DATABASE_USER_PASSWORD}@database:5432/${REPOSITORY__LOCAL_DATABASE_NAME}?schema=passbolt"
     depends_on:
