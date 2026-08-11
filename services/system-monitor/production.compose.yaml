@@ -1,0 +1,38 @@
+name: "system-monitor-production"
+
+services:
+  agent:
+    build:
+      context: "./images/"
+      dockerfile: "./agent.dockerfile"
+    volumes:
+      - "/:/host/:ro,rslave"
+    network_mode: "host"
+    pid: "host"
+    restart: "unless-stopped"
+
+  server:
+    build:
+      context: "./images/"
+      dockerfile: "./server.dockerfile"
+    ports:
+      - "8081:9090"
+    volumes:
+      - "prometheus_configuration:/etc/prometheus/"
+      - "prometheus_data:/prometheus/"
+    restart: "unless-stopped"
+
+  viewer:
+    build:
+      context: "./images/"
+      dockerfile: "./viewer.dockerfile"
+    ports:
+      - "8082:3000"
+    volumes:
+      - "grafana_data:/var/lib/grafana/"
+    restart: "unless-stopped"
+
+volumes:
+  prometheus_configuration:
+  prometheus_data:
+  grafana_data:
