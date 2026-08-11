@@ -10,9 +10,9 @@ services:
     volumes:
       - "samba_data:/storage/"
     environment:
-      NAME: "${REPOSITORY__SHARE_NAME}"
-      USER: "${REPOSITORY__SHARE_USER_NAME}"
-      PASS: "${REPOSITORY__SHARE_USER_PASSWORD}"
+      - "NAME=${REPOSITORY__SHARE_NAME}"
+      - "USER=${REPOSITORY__SHARE_USER_NAME}"
+      - "PASS=${REPOSITORY__SHARE_USER_PASSWORD}"
     restart: "unless-stopped"
 
 volumes:
