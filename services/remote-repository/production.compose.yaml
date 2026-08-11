@@ -15,7 +15,17 @@ services:
     shm_size: "256m"
     restart: "unless-stopped"
 
+  runner:
+    build:
+      context: "./images/"
+      dockerfile: "./runner.dockerfile"
+    volumes:
+      - "gitlab_runner_configuration:/etc/gitlab-runner/"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: "unless-stopped"
+
 volumes:
+  gitlab_runner_configuration:
   gitlab_configuration:
   gitlab_logs:
   gitlab_data:
