@@ -1,4 +1,4 @@
-name: "system-monitoring-production"
+name: "system-monitor-production"
 
 services:
   agent:
@@ -16,7 +16,7 @@ services:
       context: "./images/"
       dockerfile: "./server.dockerfile"
     ports:
-      - "8081:9090"
+      - "9090:9090"
     volumes:
       - "prometheus_configuration:/etc/prometheus/"
       - "prometheus_data:/prometheus/"
@@ -27,7 +27,7 @@ services:
       context: "./images/"
       dockerfile: "./viewer.dockerfile"
     ports:
-      - "8082:3000"
+      - "8090:3000"
     volumes:
       - "grafana_data:/var/lib/grafana/"
     restart: "unless-stopped"
