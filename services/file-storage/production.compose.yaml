@@ -5,6 +5,8 @@ services:
     build:
       context: "./images/"
       dockerfile: "./server.dockerfile"
+    ports:
+      - "445:445"
     volumes:
       - "samba_data:/storage/"
     environment:
