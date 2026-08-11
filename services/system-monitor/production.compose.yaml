@@ -1,4 +1,4 @@
-name: "system-monitor-production"
+name: "system-monitoring-production"
 
 services:
   agent:
